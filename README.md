@@ -70,6 +70,6 @@ npm run dev
 
 more stars to summon docs😝
 
-## screenshot
+## Screenshot
 
 <img src="http://og9g58alt.bkt.clouddn.com/datepicker.png" width="500">

@@ -234,7 +234,7 @@ export default {
       if (this.max) {
         this.maxDate = moment(this.max)
       }
-      if (this.minDate && this.maxDate && this.minDate.isAfter(this.maxDate)) {
+      if (this.minDate !== NIL && this.maxDate !== NIL && this.minDate.isAfter(this.maxDate)) {
         throw new Error("'min' should same or before of 'max'")
       }
     },
