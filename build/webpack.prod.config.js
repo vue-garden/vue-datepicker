@@ -2,13 +2,14 @@ var path = require('path')
 
 module.exports = {
   entry: './src/index.js',
+  devtool: 'source-map',
   resolve: {
     extensions: ['.js', '.vue', '.json']
   },
   output: {
-    path: path.resolve(__dirname, '../dist/prod'),
-    publicPath: '/',
-    filename: 'index.js'
+    path: path.resolve(__dirname, '../lib'),
+    filename: 'index.js',
+    libraryTarget: 'commonjs2'
   },
   module: {
     loaders: [{
