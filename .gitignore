@@ -1,4 +1,5 @@
 .DS_Store
 node_modules/
-dist/
+dist/dev
 .vscode
+npm-debug.log
