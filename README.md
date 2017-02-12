@@ -10,7 +10,7 @@ Use npm to download code:
 npm install hsy-vue-datepicker -S
 ```
 
-then import into your project, add below code into your `main.js`:
+then import it into your project, add below code into your `main.js`:
 
 ```js
 import Datepicker from 'hsy-vue-datepicker'
@@ -72,4 +72,4 @@ more stars to summon docs😝
 
 ## screenshot
 
-![](http://og9g58alt.bkt.clouddn.com/datepicker.png)
+<img src="http://og9g58alt.bkt.clouddn.com/datepicker.png" width="500">
