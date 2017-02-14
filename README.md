@@ -62,10 +62,10 @@ export default {
 
 it contains a hot-realod example for your preview or dev, run it follow:
 
-```
-cd your-clone-dir
-npm install
-npm run dev
+```sh
+$ cd your-clone-dir
+$ npm install
+$ npm run dev
 ```
 
 ## Props
