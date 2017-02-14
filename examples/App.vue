@@ -1,7 +1,11 @@
 <template>
 <div class="demo">
-  <datepicker cssClass="test1" placeholder="hehe" v-model="value" mode="daterange" min="2017-02-12"></datepicker>
-  <datepicker cssClass="test2" placeholder="hehe" v-model="value" mode="daterange" min="2017-02-12"></datepicker>
+  <div>
+    <datepicker cssClass="test1" placeholder="click to select date" v-model="value" mode="daterange" min="2017-02-12"></datepicker>
+  </div>
+  <div style="text-align: right;">
+    <datepicker cssClass="test2" placeholder="click to select date" v-model="value" mode="daterange" min="2017-02-12"></datepicker>
+  </div>
 </div>
 </template>
 
@@ -30,9 +34,5 @@ export default {
 .demo {
   background-color: #0097FF;
   padding: 10px;
-}
-
-.test2 .selected {
-  text-align: right;
 }
 </style>

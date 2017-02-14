@@ -1,7 +1,8 @@
 <template>
 <div :class="cls">
   <div class="selected">
-    <input type="text" :placeholder="placeholder" readonly="readonly" :value="selectedValue" @click="showCalendar">
+    <div class="input" @click="showCalendar">{{ selectedLabel }}</div>
+    <div class="handler"></div>
   </div>
   <div class="calendar" v-show="isCalendarShow">
     <div class="tables">
@@ -60,8 +61,8 @@ export default {
   name: 'Datepicker',
   data() {
     return {
-      date: [moment(), moment()],
-      selecting: [moment(), moment()],
+      date: [NIL, NIL],
+      selecting: [NIL, NIL],
       input0: '',
       input1: '',
       minDate: NIL,
@@ -146,6 +147,9 @@ export default {
         this.selecting0 = date.clone()
       },
       get() {
+        if (this.date[0] === NIL) {
+          return ''
+        }
         return this.date[0].format(DATE_FORMATTER)
       }
     },
@@ -168,6 +172,9 @@ export default {
         this.selecting1 = date.clone()
       },
       get() {
+        if (this.date[1] === NIL) {
+          return ''
+        }
         return this.date[1].format(DATE_FORMATTER)
       }
     },
@@ -207,6 +214,21 @@ export default {
         return this.date0
       }
       return this.date0 + ' - ' + this.date1
+    },
+    dateLabel() {
+      if (this.date0 !== '') {
+        return this.date0
+      }
+      return this.placeholder
+    },
+    daterangeLabel() {
+      if (this.date0 !== '' && this.date1 !== '') {
+        return this.date0 + ' - ' + this.date1
+      }
+      return this.placeholder
+    },
+    selectedLabel() {
+      return this.mode === MODE_DATE ? this.dateLabel : this.daterangeLabel
     }
   },
   methods: {
@@ -225,7 +247,9 @@ export default {
         this.date1 = value[1]
       }
 
-      this.pagesDate = this.date[0].clone()
+      if (this.date[0] !== NIL) {
+        this.pagesDate = this.date[0].clone()
+      }
     },
     prepareMinMax() {
       if (this.min) {
@@ -394,14 +418,22 @@ export default {
       this.isCalendarShow = false
     },
     showCalendar() {
-      this.selecting0 = this.date[0]
-      this.selecting1 = this.date[1]
+      if (this.date[0] !== NIL) {
+        this.selecting0 = this.date[0]
+      } else {
+        this.selecting0 = moment()
+      }
+      if (this.date[1] !== NIL) {
+        this.selecting1 = this.date[1]
+      } else {
+        this.selecting1 = moment()
+      }
 
       this.isCalendarShow = !this.isCalendarShow
       if (!this.isCalendarShow) return
 
       this.$nextTick(() => {
-        let inputEl = this.$el.querySelector('.selected > input')
+        let inputEl = this.$el.querySelector('.selected > .input')
         let selectedEl = this.$el.querySelector('.selected')
         let calendarEl = this.$el.querySelector('.calendar')
         if (selectedEl && inputEl && calendarEl) {
@@ -410,7 +442,7 @@ export default {
           calendarEl.style.top = (inputRect.height + 5) + 'px'
           let calendarRect = calendarEl.getBoundingClientRect()
           if (inputRect.left + calendarRect.width > document.body.clientWidth - 35) {
-            calendarEl.style.left = (inputRect.right - calendarRect.width - selectedRect.left) + 'px'
+            calendarEl.style.left = (selectedRect.width - calendarRect.width) + 'px'
           } else {
             calendarEl.style.left = '0px'
           }
@@ -443,6 +475,7 @@ export default {
 
 <style>
 .vue-datepicker {
+  display: inline-block;
   font-family: Helvetica Neue, Helvetica, PingFang SC, Hiragino Sans GB, Microsoft YaHei, SimSun, sans-serif;
   font-weight: 400;
   font-size: 14px;
@@ -652,17 +685,35 @@ export default {
   float: none
 }
 
-.vue-datepicker .selected input {
+.vue-datepicker .selected {
+  display: inline-block;
   border: 1px solid #fff;
   border-radius: 5px;
-  width: 250px;
   height: 28px;
+  line-height: 28px;
   padding: 0;
   background-color: #0097FF;
   color: #fff;
-  font-size: 12px;
   outline: none;
-  text-indent: 12px;
+  font-size: 0;
+  position: relative;
+  cursor: pointer;
+}
+
+.vue-datepicker .selected>.input {
+  display: inline-block;
+  padding: 0 15px;
+  height: 100%;
+  font-size: 12px;
+  vertical-align: top;
+}
+
+.vue-datepicker .selected>.handler {
+  display: inline-block;
+  vertical-align: top;
+  width: 28px;
+  height: 28px;
   background: url('assets/images/light-arrow-down.svg') no-repeat right center;
+  background-size: contain;
 }
 </style>
