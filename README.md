@@ -60,7 +60,7 @@ export default {
 </script>
 ```
 
-now for more options info you can clone this project and run it's examples:
+it contains a hot-realod example for your preview or dev, run it follow:
 
 ```
 cd your-clone-dir
@@ -68,7 +68,16 @@ npm install
 npm run dev
 ```
 
-more stars to summon docs😝
+## Props
+
+| Prop         | Description                                      | Type                               | Accepted Values | Default  |
+|:-------------|:-------------------------------------------------|:-----------------------------------|:----------------|:---------|
+| value        | dates to be manipulated                          | String/Moment/Date/Array of former | --              | moment() |
+| mode         | mode of picker                                   | String                             | date/daterange  | date     |
+| cssClass     | css class to be appended to component $el        | String                             | --              | --       |
+| placeholder  | placeholder                                      | String                             | --              | --       |
+| cbDate0Error | callback for error input from user of begin date | --                                 | --              |          |
+| cbDate1Error | callback for error input from user of end date   | --                                 | --              |          |
 
 ## Screenshot
 

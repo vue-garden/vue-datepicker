@@ -1,5 +1,5 @@
 <template>
-<div class="vue-datepicker" :class="cls">
+<div :class="cls">
   <div class="selected">
     <input type="text" :placeholder="placeholder" readonly="readonly" :value="selectedValue" @click="showCalendar">
   </div>
@@ -402,15 +402,17 @@ export default {
 
       this.$nextTick(() => {
         let inputEl = this.$el.querySelector('.selected > input')
+        let selectedEl = this.$el.querySelector('.selected')
         let calendarEl = this.$el.querySelector('.calendar')
-        if (inputEl && calendarEl) {
-          let boundRect = inputEl.getBoundingClientRect()
-          calendarEl.style.top = (boundRect.bottom + 5) + 'px'
+        if (selectedEl && inputEl && calendarEl) {
+          let inputRect = inputEl.getBoundingClientRect()
+          let selectedRect = selectedEl.getBoundingClientRect()
+          calendarEl.style.top = (inputRect.height + 5) + 'px'
           let calendarRect = calendarEl.getBoundingClientRect()
-          if (boundRect.left + calendarRect.width > document.body.clientWidth - 35) {
-            calendarEl.style.left = (boundRect.right - calendarRect.width) + 'px'
+          if (inputRect.left + calendarRect.width > document.body.clientWidth - 35) {
+            calendarEl.style.left = (inputRect.right - calendarRect.width - selectedRect.left) + 'px'
           } else {
-            calendarEl.style.left = boundRect.left + 'px'
+            calendarEl.style.left = '0px'
           }
         }
       })
@@ -444,6 +446,7 @@ export default {
   font-family: Helvetica Neue, Helvetica, PingFang SC, Hiragino Sans GB, Microsoft YaHei, SimSun, sans-serif;
   font-weight: 400;
   font-size: 14px;
+  position: relative;
 }
 
 .vue-datepicker .calendar {
@@ -486,12 +489,16 @@ export default {
 
 .vue-datepicker .calendar .table thead th.prev,
 .vue-datepicker .calendar .table thead th.next {
-  height: 20px;
-  width: 20px;
-  padding: 5px;
+  height: 10px;
+  width: 10px;
+  padding: 10px;
   border-radius: 4px;
   display: block;
   cursor: pointer;
+}
+
+.vue-datepicker .calendar .table thead th.month {
+  text-align: center;
 }
 
 .vue-datepicker .calendar .table thead tr:last-child th {
@@ -521,9 +528,7 @@ export default {
 }
 
 .vue-datepicker .calendar .table td {
-  width: 20px;
-  height: 20px;
-  padding: 5px;
+  padding: 8px;
   text-align: center;
 }
 
