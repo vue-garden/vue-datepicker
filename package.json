@@ -1,6 +1,6 @@
 {
   "name": "hsy-vue-datepicker",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "vue datepicker component",
   "author": "hsiaosiyuan0 <hsiaosiyuan0@outlook.com>",
   "main": "lib/index.js",
