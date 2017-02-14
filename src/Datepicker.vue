@@ -522,9 +522,7 @@ export default {
 
 .vue-datepicker .calendar .table thead th.prev,
 .vue-datepicker .calendar .table thead th.next {
-  height: 10px;
-  width: 10px;
-  padding: 10px;
+  padding: 15px;
   border-radius: 4px;
   display: block;
   cursor: pointer;
