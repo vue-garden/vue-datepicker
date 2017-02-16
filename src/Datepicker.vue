@@ -128,6 +128,17 @@ export default {
     }
   },
   computed: {
+    cls() {
+      let daterange = this.mode === MODE_DATERANGE
+      let cls = {
+        'hsy-datepicker': true,
+        daterange
+      }
+      if (this.cssClass) {
+        cls[this.cssClass] = true
+      }
+      return cls
+    },
     date0: {
       set(newVal) {
         let date = moment(newVal)
@@ -197,17 +208,6 @@ export default {
       get(newVal) {
         return this.selecting[1].format(DATE_FORMATTER)
       }
-    },
-    cls() {
-      let daterange = this.mode === MODE_DATERANGE
-      let cls = {
-        'vue-datepicker': true,
-        daterange
-      }
-      if (this.cssClass) {
-        cls[this.cssClass] = true
-      }
-      return cls
     },
     selectedValue() {
       if (this.mode === MODE_DATE) {
@@ -474,7 +474,7 @@ export default {
 </script>
 
 <style>
-.vue-datepicker {
+.hsy-datepicker {
   display: inline-block;
   font-family: Helvetica Neue, Helvetica, PingFang SC, Hiragino Sans GB, Microsoft YaHei, SimSun, sans-serif;
   font-weight: 400;
@@ -482,7 +482,7 @@ export default {
   position: relative;
 }
 
-.vue-datepicker .calendar {
+.hsy-datepicker .calendar {
   display: inline-block;
   background: #fff;
   border-radius: 4px;
@@ -492,7 +492,7 @@ export default {
   position: absolute;
 }
 
-.vue-datepicker .calendar .input input {
+.hsy-datepicker .calendar .input input {
   display: block;
   padding: 0;
   border: 1px solid #979797;
@@ -507,63 +507,63 @@ export default {
   outline: none;
 }
 
-.vue-datepicker .calendar .input input:focus {
+.hsy-datepicker .calendar .input input:focus {
   border: 1px solid #0097FF;
 }
 
-.vue-datepicker .calendar .tables {
+.hsy-datepicker .calendar .tables {
   white-space: nowrap;
 }
 
-.vue-datepicker .calendar .table table {
+.hsy-datepicker .calendar .table table {
   border-collapse: collapse;
   border-spacing: 0;
 }
 
-.vue-datepicker .calendar .table thead th.prev,
-.vue-datepicker .calendar .table thead th.next {
+.hsy-datepicker .calendar .table thead th.prev,
+.hsy-datepicker .calendar .table thead th.next {
   padding: 15px;
   border-radius: 4px;
   display: block;
   cursor: pointer;
 }
 
-.vue-datepicker .calendar .table thead th.month {
+.hsy-datepicker .calendar .table thead th.month {
   text-align: center;
 }
 
-.vue-datepicker .calendar .table thead tr:last-child th {
+.hsy-datepicker .calendar .table thead tr:last-child th {
   padding: 10px 0;
 }
 
-.vue-datepicker .calendar .table thead th.prev:hover,
-.vue-datepicker .calendar .table thead th.next:hover {
+.hsy-datepicker .calendar .table thead th.prev:hover,
+.hsy-datepicker .calendar .table thead th.next:hover {
   background-color: #888;
 }
 
-.vue-datepicker .calendar .table thead th.prev {
+.hsy-datepicker .calendar .table thead th.prev {
   background: #9B9B9B url('assets/images/arrow-left-white.svg') no-repeat center center;
 }
 
-.vue-datepicker .calendar .table thead th.next {
+.hsy-datepicker .calendar .table thead th.next {
   background: #9B9B9B url('assets/images/arrow-right-white.svg') no-repeat center center;
 }
 
-.vue-datepicker .calendar .table thead th {
+.hsy-datepicker .calendar .table thead th {
   color: #333;
   font-weight: normal;
 }
 
-.vue-datepicker .calendar .table {
+.hsy-datepicker .calendar .table {
   color: #6a7288;
 }
 
-.vue-datepicker .calendar .table td {
+.hsy-datepicker .calendar .table td {
   padding: 8px;
   text-align: center;
 }
 
-.vue-datepicker .calendar .table td:hover {
+.hsy-datepicker .calendar .table td:hover {
   width: 20px;
   height: 20px;
   padding: 5px;
@@ -574,58 +574,58 @@ export default {
   color: #333;
 }
 
-.vue-datepicker .calendar .table td.off {
+.hsy-datepicker .calendar .table td.off {
   color: #ccc;
 }
 
-.vue-datepicker .calendar .table td.off:hover {
+.hsy-datepicker .calendar .table td.off:hover {
   background-color: #fff;
   cursor: default;
 }
 
-.vue-datepicker .calendar .table td.start {
+.hsy-datepicker .calendar .table td.start {
   background-color: #00A0FF;
   color: #fff;
   border-radius: 4px 0 0 4px;
 }
 
-.vue-datepicker .calendar .table td.active {
+.hsy-datepicker .calendar .table td.active {
   background-color: #00A0FF;
   color: #fff;
   border-radius: 4px;
 }
 
-.vue-datepicker .calendar .table td.between {
+.hsy-datepicker .calendar .table td.between {
   background-color: #B9E6FF;
   color: #6A7289;
 }
 
-.vue-datepicker .calendar .table td.between+td:not(.end):hover {
+.hsy-datepicker .calendar .table td.between+td:not(.end):hover {
   border-radius: 0;
 }
 
-.vue-datepicker .calendar .table td.between:hover {
+.hsy-datepicker .calendar .table td.between:hover {
   border-radius: 0;
   background-color: #eee;
 }
 
-.vue-datepicker .calendar .table td.end {
+.hsy-datepicker .calendar .table td.end {
   background-color: #00A0FF;
   color: #fff;
   border-radius: 0 4px 4px 0;
 }
 
-.vue-datepicker .calendar .table td.start.end {
+.hsy-datepicker .calendar .table td.start.end {
   border-radius: 4px;
 }
 
-.vue-datepicker .calendar .confirm {
+.hsy-datepicker .calendar .confirm {
   text-align: right;
   padding: 10px 0;
   padding-bottom: 0;
 }
 
-.vue-datepicker .calendar .confirm button {
+.hsy-datepicker .calendar .confirm button {
   border: 0;
   border-radius: 3px;
   color: #fff;
@@ -636,54 +636,54 @@ export default {
   font-size: 12px;
 }
 
-.vue-datepicker .calendar .confirm button.yes {
+.hsy-datepicker .calendar .confirm button.yes {
   background-color: #00A0FF;
 }
 
-.vue-datepicker .calendar .confirm button.yes:disabled {
+.hsy-datepicker .calendar .confirm button.yes:disabled {
   background-color: #58B7FF;
   cursor: not-allowed;
 }
 
-.vue-datepicker .calendar .confirm button.no {
+.hsy-datepicker .calendar .confirm button.no {
   background-color: #9B9B9B;
   margin-left: 7px;
 }
 
-.vue-datepicker .left {
+.hsy-datepicker .left {
   float: left;
 }
 
-.vue-datepicker .right {
+.hsy-datepicker .right {
   float: right;
 }
 
-.vue-datepicker .calendar .confirm::after {
+.hsy-datepicker .calendar .confirm::after {
   content: "";
   clear: both;
 }
 
-.vue-datepicker.daterange .table {
+.hsy-datepicker.daterange .table {
   display: inline-block;
 }
 
-.vue-datepicker.daterange .table:first-child th.next {
+.hsy-datepicker.daterange .table:first-child th.next {
   visibility: hidden;
 }
 
-.vue-datepicker.daterange .table:last-child {
+.hsy-datepicker.daterange .table:last-child {
   margin-left: 10px;
 }
 
-.vue-datepicker.daterange .table:last-child th.prev {
+.hsy-datepicker.daterange .table:last-child th.prev {
   visibility: hidden;
 }
 
-.vue-datepicker.daterange .confirm button {
+.hsy-datepicker.daterange .confirm button {
   float: none
 }
 
-.vue-datepicker .selected {
+.hsy-datepicker .selected {
   display: inline-block;
   border: 1px solid #fff;
   border-radius: 5px;
@@ -698,7 +698,7 @@ export default {
   cursor: pointer;
 }
 
-.vue-datepicker .selected>.input {
+.hsy-datepicker .selected>.input {
   display: inline-block;
   padding: 0 15px;
   height: 100%;
@@ -706,7 +706,7 @@ export default {
   vertical-align: top;
 }
 
-.vue-datepicker .selected>.handler {
+.hsy-datepicker .selected>.handler {
   display: inline-block;
   vertical-align: top;
   width: 28px;
