@@ -79,6 +79,10 @@ $ npm run dev
 | cbDate0Error | callback for error input from user of begin date | --                                 | --              |          |
 | cbDate1Error | callback for error input from user of end date   | --                                 | --              |          |
 
+## Demo
+
+[Demo](http://vue-demo.hsiaosiyuan.com/#/datepicker)
+
 ## Screenshot
 
 <img src="http://og9g58alt.bkt.clouddn.com/datepicker.png" width="500">
