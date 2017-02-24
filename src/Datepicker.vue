@@ -40,7 +40,7 @@
     </div>
     <div class="confirm">
       <button class="yes left" @click="saveChanges" :disabled="!savable">确定</button>
-      <button class="no right" @click="hideCalendar">取消</button>
+      <button class="no right" @click="cancelClicked">取消</button>
     </div>
   </div>
 </div>
@@ -104,12 +104,17 @@ export default {
     cbDate1Error: {
       type: Function,
       default: EMPTY_FN
+    },
+    cbCancelClicked: {
+      type: Function,
+      default: EMPTY_FN
     }
   },
   watch: {
     value: {
       immediate: true,
       handler(val) {
+        this.date = [NIL, NIL]
         this.prepareDate()
         this.isSelecting = false
       }
@@ -462,6 +467,10 @@ export default {
       if (!this.$el.contains(evt.target)) {
         this.hideCalendar()
       }
+    },
+    cancelClicked() {
+      this.isCalendarShow = false
+      this.cbCancelClicked()
     }
   },
   mounted() {

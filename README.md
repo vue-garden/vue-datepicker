@@ -70,14 +70,15 @@ $ npm run dev
 
 ## Props
 
-| Prop         | Description                                      | Type                               | Accepted Values | Default  |
-|:-------------|:-------------------------------------------------|:-----------------------------------|:----------------|:---------|
-| value        | dates to be manipulated                          | String/Moment/Date/Array of former | --              | moment() |
-| mode         | mode of picker                                   | String                             | date/daterange  | date     |
-| cssClass     | css class to be appended to component $el        | String                             | --              | --       |
-| placeholder  | placeholder                                      | String                             | --              | --       |
-| cbDate0Error | callback for error input from user of begin date | --                                 | --              |          |
-| cbDate1Error | callback for error input from user of end date   | --                                 | --              |          |
+| Prop            | Description                                      | Type                               | Accepted Values | Default  |
+|:----------------|:-------------------------------------------------|:-----------------------------------|:----------------|:---------|
+| value           | dates to be manipulated                          | String/Moment/Date/Array of former | --              | moment() |
+| mode            | mode of picker                                   | String                             | date/daterange  | date     |
+| cssClass        | css class to be appended to component $el        | String                             | --              | --       |
+| placeholder     | placeholder                                      | String                             | --              | --       |
+| cbDate0Error    | callback for error input from user of begin date | --                                 | --              |          |
+| cbDate1Error    | callback for error input from user of end date   | --                                 | --              |          |
+| cbCancelClicked | callback for cancel button clicked               | --                                 | --              | --       |
 
 ## Demo
 
