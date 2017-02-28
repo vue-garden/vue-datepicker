@@ -55,8 +55,6 @@ const EMPTY_FN = () => {}
 const MODE_DATE = 'date'
 const MODE_DATERANGE = 'daterange'
 
-const DATE_FORMATTER = 'YYYY年MM月DD日'
-
 export default {
   name: 'Datepicker',
   data() {
@@ -97,6 +95,18 @@ export default {
     value: {},
     cssClass: String,
     placeholder: String,
+    dateFormatter: {
+      type: String,
+      default: 'YYYY-MM-DD'
+    },
+    dateLabelFormatter: {
+      type: String,
+      default: 'YYYY-MM-DD'
+    },
+    dateLabelSeparator: {
+      type: String,
+      default: ' - '
+    },
     cbDate0Error: {
       type: Function,
       default: EMPTY_FN
@@ -166,7 +176,7 @@ export default {
         if (this.date[0] === NIL) {
           return ''
         }
-        return this.date[0].format(DATE_FORMATTER)
+        return this.date[0].format(this.dateLabelFormatter)
       }
     },
     date1: {
@@ -191,34 +201,28 @@ export default {
         if (this.date[1] === NIL) {
           return ''
         }
-        return this.date[1].format(DATE_FORMATTER)
+        return this.date[1].format(this.dateLabelFormatter)
       }
     },
     selecting0: {
       set(newVal) {
-        this.input0 = newVal.format(DATE_FORMATTER)
+        this.input0 = newVal.format(this.dateLabelFormatter)
         this.$set(this.selecting, 0, newVal)
         this.preparePages()
       },
-      get(newVal) {
-        return this.selecting[0].format(DATE_FORMATTER)
+      get() {
+        return this.selecting[0].format(this.dateLabelFormatter)
       }
     },
     selecting1: {
       set(newVal) {
-        this.input1 = newVal.format(DATE_FORMATTER)
+        this.input1 = newVal.format(this.dateLabelFormatter)
         this.$set(this.selecting, 1, newVal)
         this.preparePages()
       },
-      get(newVal) {
-        return this.selecting[1].format(DATE_FORMATTER)
+      get() {
+        return this.selecting[1].format(this.dateLabelFormatter)
       }
-    },
-    selectedValue() {
-      if (this.mode === MODE_DATE) {
-        return this.date0
-      }
-      return this.date0 + ' - ' + this.date1
     },
     dateLabel() {
       if (this.date0 !== '') {
@@ -228,7 +232,7 @@ export default {
     },
     daterangeLabel() {
       if (this.date0 !== '' && this.date1 !== '') {
-        return this.date0 + ' - ' + this.date1
+        return this.date0 + this.dateLabelSeparator + this.date1
       }
       return this.placeholder
     },
@@ -278,9 +282,9 @@ export default {
         return true
       }
       if (this.isSelecting) {
-        return this.previewEndDate !== NIL && date.isAfter(this.selecting[0]) && date.isBefore(this.previewEndDate)
+        return this.previewEndDate !== NIL && date.startOf('day').isAfter(this.selecting[0]) && date.startOf('day').isBefore(this.previewEndDate)
       }
-      return date.isAfter(this.selecting[0]) && date.isBefore(this.selecting[1])
+      return date.startOf('day').isAfter(this.selecting[0]) && date.startOf('day').isBefore(this.selecting[1])
     },
     isSelectingEnd(date) {
       if (this.MODE_DATE) {
@@ -365,7 +369,7 @@ export default {
       }
     },
     selectDate(date) {
-      if (date.cssClass.off) return
+      if (date.cssClass && date.cssClass.off) return
       if (this.mode === MODE_DATE) {
         this.selecting0 = date
         return
@@ -389,25 +393,25 @@ export default {
       this.pagesDate.add(1, 'month')
       this.preparePages()
     },
-    dateFromStr(str) {
-      let date = moment(str, DATE_FORMATTER)
+    dateFromLabelStr(str) {
+      let date = moment(str, this.dateLabelFormatter)
       if (date.isValid()) return date
       date = moment(str)
       if (date.isValid()) return date
       return moment.invalid()
     },
     recoverInput0() {
-      let date = this.dateFromStr(this.input0)
+      let date = this.dateFromLabelStr(this.input0)
       if (date.isValid()) {
-        this.selecting0 = date
+        this.selectDate(date)
       } else {
         this.input0 = this.selecting0
       }
     },
     recoverInput1() {
-      let date = this.dateFromStr(this.input1)
+      let date = this.dateFromLabelStr(this.input1)
       if (date.isValid()) {
-        this.selecting1 = date
+        this.selectDate(date)
       } else {
         this.input1 = this.selecting1
       }

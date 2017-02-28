@@ -4,7 +4,7 @@
     <datepicker cssClass="test1" placeholder="click to select date" v-model="value" mode="daterange" min="2017-02-12"></datepicker>
   </div>
   <div style="text-align: right;">
-    <datepicker cssClass="test2" ref="demo2" placeholder="click to select date" v-model="value" :cbCancelClicked="cancelClicked" mode="daterange" min="2017-02-12"></datepicker>
+    <datepicker cssClass="test2" ref="demo2" :dateLabelFormatter="'YYYY年MM月DD日'" placeholder="click to select date" v-model="value" :cbCancelClicked="cancelClicked" mode="daterange" min="2017-02-12"></datepicker>
   </div>
 </div>
 </template>
