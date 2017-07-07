@@ -1,5 +1,7 @@
 var path = require('path')
 var HtmlWebpackPlugin = require('html-webpack-plugin')
+var ExtractTextPlugin = require('extract-text-webpack-plugin')
+var extractCss = new ExtractTextPlugin('css/style.css')
 
 module.exports = {
   entry: './examples/main.js',
@@ -20,6 +22,7 @@ module.exports = {
     port: 8080
   },
   plugins: [
+    extractCss,
     new HtmlWebpackPlugin({
       filename: path.resolve(__dirname, '../dist/dev/index.html'),
       template: 'examples/index.html',
@@ -29,7 +32,16 @@ module.exports = {
   module: {
     loaders: [{
       test: /\.vue$/,
-      loader: 'vue-loader'
+      use: {
+        loader: 'vue-loader',
+        options: {
+          loaders: {
+            scss: extractCss.extract({
+              use: ['css-loader', 'sass-loader']
+            })
+          }
+        }
+      }
     }, {
       test: /\.js$/,
       loaders: ['babel-loader', 'eslint-loader'],

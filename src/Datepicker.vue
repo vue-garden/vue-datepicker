@@ -486,7 +486,7 @@ export default {
 }
 </script>
 
-<style>
+<style lang="scss">
 .hsy-datepicker {
   display: inline-block;
   font-family: Helvetica Neue, Helvetica, PingFang SC, Hiragino Sans GB, Microsoft YaHei, SimSun, sans-serif;
