@@ -487,244 +487,250 @@ export default {
 </script>
 
 <style lang="scss">
-.hsy-datepicker {
-  display: inline-block;
-  font-family: Helvetica Neue, Helvetica, PingFang SC, Hiragino Sans GB, Microsoft YaHei, SimSun, sans-serif;
-  font-weight: 400;
-  font-size: 14px;
-  position: relative;
-}
+  .hsy-datepicker {
+    display: inline-block;
+    font-family: Helvetica Neue, Helvetica, PingFang SC, Hiragino Sans GB, Microsoft YaHei, SimSun, sans-serif;
+    font-weight: 400;
+    font-size: 14px;
+    position: relative;
 
-.hsy-datepicker .calendar {
-  display: inline-block;
-  background: #fff;
-  border-radius: 4px;
-  border: 1px solid rgba(0, 0, 0, 0.15);
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
-  padding: 13px 20px;
-  position: absolute;
-}
+    .calendar {
+      display: inline-block;
+      background: #fff;
+      border-radius: 4px;
+      border: 1px solid rgba(0, 0, 0, 0.15);
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
+      padding: 13px 20px;
+      position: absolute;
 
-.hsy-datepicker .calendar .input input {
-  display: block;
-  padding: 0;
-  border: 1px solid #979797;
-  margin-bottom: 13px;
-  border-radius: 4px;
-  width: 100%;
-  font-size: 13px;
-  color: #6A7288;
-  height: 30px;
-  line-height: 30px;
-  text-align: center;
-  outline: none;
-}
+      .input input {
+        display: block;
+        padding: 0;
+        border: 1px solid #979797;
+        margin-bottom: 13px;
+        border-radius: 4px;
+        width: 100%;
+        font-size: 13px;
+        color: #6A7288;
+        height: 30px;
+        line-height: 30px;
+        text-align: center;
+        outline: none;
 
-.hsy-datepicker .calendar .input input:focus {
-  border: 1px solid #0097FF;
-}
+        &:focus {
+          border: 1px solid #0097FF;
+        }
+      }
 
-.hsy-datepicker .calendar .tables {
-  white-space: nowrap;
-}
+      .tables {
+        white-space: nowrap;
+      }
 
-.hsy-datepicker .calendar .table table {
-  border-collapse: collapse;
-  border-spacing: 0;
-}
+      .table {
+        table {
+          border-collapse: collapse;
+          border-spacing: 0;
+        }
 
-.hsy-datepicker .calendar .table thead th.prev,
-.hsy-datepicker .calendar .table thead th.next {
-  padding: 15px;
-  border-radius: 4px;
-  display: block;
-  cursor: pointer;
-}
+        thead {
+          th {
+            &.prev, &.next {
+              padding: 15px;
+              border-radius: 4px;
+              display: block;
+              cursor: pointer;
+            }
 
-.hsy-datepicker .calendar .table thead th.month {
-  text-align: center;
-}
+            &.month {
+              text-align: center;
+            }
+          }
 
-.hsy-datepicker .calendar .table thead tr:last-child th {
-  padding: 10px 0;
-}
+          tr:last-child th {
+            padding: 10px 0;
+          }
 
-.hsy-datepicker .calendar .table thead th.prev:hover,
-.hsy-datepicker .calendar .table thead th.next:hover {
-  background-color: #888;
-}
+          th {
+            &.prev:hover, &.next:hover {
+              background-color: #888;
+            }
 
-.hsy-datepicker .calendar .table thead th.prev {
-  background: #9B9B9B url('assets/images/arrow-left-white.svg') no-repeat center center;
-}
+            &.prev {
+              background: #9B9B9B url('assets/images/arrow-left-white.svg') no-repeat center center;
+            }
 
-.hsy-datepicker .calendar .table thead th.next {
-  background: #9B9B9B url('assets/images/arrow-right-white.svg') no-repeat center center;
-}
+            &.next {
+              background: #9B9B9B url('assets/images/arrow-right-white.svg') no-repeat center center;
+            }
 
-.hsy-datepicker .calendar .table thead th {
-  color: #333;
-  font-weight: normal;
-}
+            color: #333;
+            font-weight: normal;
+          }
+        }
 
-.hsy-datepicker .calendar .table {
-  color: #6a7288;
-}
+        color: #6a7288;
 
-.hsy-datepicker .calendar .table td {
-  padding: 8px;
-  text-align: center;
-}
+        td {
+          padding: 8px;
+          text-align: center;
 
-.hsy-datepicker .calendar .table td:hover {
-  width: 20px;
-  height: 20px;
-  padding: 5px;
-  border-radius: 4px;
-  white-space: nowrap;
-  cursor: pointer;
-  background-color: #eee;
-  color: #333;
-}
+          &:hover {
+            width: 20px;
+            height: 20px;
+            padding: 5px;
+            border-radius: 4px;
+            white-space: nowrap;
+            cursor: pointer;
+            background-color: #eee;
+            color: #333;
+          }
 
-.hsy-datepicker .calendar .table td.off {
-  color: #ccc;
-}
+          &.off {
+            color: #ccc;
 
-.hsy-datepicker .calendar .table td.off:hover {
-  background-color: #fff;
-  cursor: default;
-}
+            &:hover {
+              background-color: #fff;
+              cursor: default;
+            }
+          }
 
-.hsy-datepicker .calendar .table td.start {
-  background-color: #00A0FF;
-  color: #fff;
-  border-radius: 4px 0 0 4px;
-}
+          &.start {
+            background-color: #00A0FF;
+            color: #fff;
+            border-radius: 4px 0 0 4px;
+          }
 
-.hsy-datepicker .calendar .table td.active {
-  background-color: #00A0FF;
-  color: #fff;
-  border-radius: 4px;
-}
+          &.active {
+            background-color: #00A0FF;
+            color: #fff;
+            border-radius: 4px;
+          }
 
-.hsy-datepicker .calendar .table td.between {
-  background-color: #B9E6FF;
-  color: #6A7289;
-}
+          &.between {
+            background-color: #B9E6FF;
+            color: #6A7289;
 
-.hsy-datepicker .calendar .table td.between+td:not(.end):hover {
-  border-radius: 0;
-}
+            + td:not(.end):hover {
+              border-radius: 0;
+            }
 
-.hsy-datepicker .calendar .table td.between:hover {
-  border-radius: 0;
-  background-color: #eee;
-}
+            &:hover {
+              border-radius: 0;
+              background-color: #eee;
+            }
+          }
 
-.hsy-datepicker .calendar .table td.end {
-  background-color: #00A0FF;
-  color: #fff;
-  border-radius: 0 4px 4px 0;
-}
+          &.end {
+            background-color: #00A0FF;
+            color: #fff;
+            border-radius: 0 4px 4px 0;
+          }
 
-.hsy-datepicker .calendar .table td.start.end {
-  border-radius: 4px;
-}
+          &.start.end {
+            border-radius: 4px;
+          }
+        }
+      }
 
-.hsy-datepicker .calendar .confirm {
-  text-align: right;
-  padding: 10px 0;
-  padding-bottom: 0;
-}
+      .confirm {
+        text-align: right;
+        padding: 10px 0;
+        padding-bottom: 0;
 
-.hsy-datepicker .calendar .confirm button {
-  border: 0;
-  border-radius: 3px;
-  color: #fff;
-  width: 80px;
-  height: 33px;
-  outline: none;
-  cursor: pointer;
-  font-size: 12px;
-}
+        button {
+          border: 0;
+          border-radius: 3px;
+          color: #fff;
+          width: 80px;
+          height: 33px;
+          outline: none;
+          cursor: pointer;
+          font-size: 12px;
 
-.hsy-datepicker .calendar .confirm button.yes {
-  background-color: #00A0FF;
-}
+          &.yes {
+            background-color: #00A0FF;
 
-.hsy-datepicker .calendar .confirm button.yes:disabled {
-  background-color: #58B7FF;
-  cursor: not-allowed;
-}
+            &:disabled {
+              background-color: #58B7FF;
+              cursor: not-allowed;
+            }
+          }
 
-.hsy-datepicker .calendar .confirm button.no {
-  background-color: #9B9B9B;
-  margin-left: 7px;
-}
+          &.no {
+            background-color: #9B9B9B;
+            margin-left: 7px;
+          }
+        }
+      }
+    }
 
-.hsy-datepicker .left {
-  float: left;
-}
+    .left {
+      float: left;
+    }
 
-.hsy-datepicker .right {
-  float: right;
-}
+    .right {
+      float: right;
+    }
 
-.hsy-datepicker .calendar .confirm::after {
-  content: "";
-  clear: both;
-}
+    .calendar .confirm::after {
+      content: "";
+      clear: both;
+    }
 
-.hsy-datepicker.daterange .table {
-  display: inline-block;
-}
+    &.daterange {
+      .table {
+        display: inline-block;
 
-.hsy-datepicker.daterange .table:first-child th.next {
-  visibility: hidden;
-}
+        &:first-child th.next {
+          visibility: hidden;
+        }
 
-.hsy-datepicker.daterange .table:last-child {
-  margin-left: 10px;
-}
+        &:last-child {
+          margin-left: 10px;
 
-.hsy-datepicker.daterange .table:last-child th.prev {
-  visibility: hidden;
-}
+          th.prev {
+            visibility: hidden;
+          }
+        }
+      }
 
-.hsy-datepicker.daterange .confirm button {
-  float: none
-}
+      .confirm button {
+        float: none;
+      }
+    }
 
-.hsy-datepicker .selected {
-  display: inline-block;
-  border: 1px solid #fff;
-  border-radius: 5px;
-  height: 28px;
-  line-height: 28px;
-  padding: 0;
-  background-color: #0097FF;
-  color: #fff;
-  outline: none;
-  font-size: 0;
-  position: relative;
-  cursor: pointer;
-}
+    .selected {
+      display: inline-block;
+      border: 1px solid #fff;
+      border-radius: 5px;
+      height: 28px;
+      line-height: 28px;
+      padding: 0;
+      background-color: #0097FF;
+      color: #fff;
+      outline: none;
+      font-size: 0;
+      position: relative;
+      cursor: pointer;
 
-.hsy-datepicker .selected>.input {
-  display: inline-block;
-  padding: 0 15px;
-  height: 100%;
-  font-size: 12px;
-  vertical-align: top;
-}
+      > {
+        .input {
+          display: inline-block;
+          padding: 0 15px;
+          height: 100%;
+          font-size: 12px;
+          vertical-align: top;
+        }
 
-.hsy-datepicker .selected>.handler {
-  display: inline-block;
-  vertical-align: top;
-  width: 28px;
-  height: 28px;
-  background: url('assets/images/light-arrow-down.svg') no-repeat right center;
-  background-size: contain;
-}
+        .handler {
+          display: inline-block;
+          vertical-align: top;
+          width: 28px;
+          height: 28px;
+          background: url('assets/images/light-arrow-down.svg') no-repeat right center;
+          background-size: contain;
+        }
+      }
+    }
+  }
 </style>
