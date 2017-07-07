@@ -1,22 +1,24 @@
 <template>
-<div :class="cls">
-  <div class="selected">
-    <div class="input" @click="showCalendar">{{ selectedLabel }}</div>
-    <div class="handler"></div>
+<div class="hsy-datepicker" :class="cls">
+  <div class="hsy-datepicker__selected">
+    <div class="hsy-datepicker__selected-label" @click="showCalendar">{{ selectedLabel }}</div>
+    <div class="hsy-datepicker__selected-handler"></div>
   </div>
-  <div class="calendar" v-show="isCalendarShow">
-    <div class="tables">
-      <div class="table" v-for="(page, idx) in pages">
-        <div class="input">
+
+  <div class="hsy-datepicker__calendar" v-show="isCalendarShow">
+    <div class="hsy-datepicker__calendar-tables">
+      <div class="hsy-datepicker__calendar-tables-table" v-for="(page, idx) in pages">
+        <div class="hsy-datepicker__calendar-tables-table-inputs">
           <input type="text" v-if="idx === 0" v-model="input0" @blur="recoverInput0">
           <input type="text" v-if="idx === 1" v-model="input1" @blur="recoverInput1">
         </div>
+
         <table>
           <thead>
             <tr>
-              <th class="prev" @click="backPage"></th>
-              <th colspan="5" class="month"> {{ page.date.format && page.date.format('YYYY年 M月') }} </th>
-              <th class="next" @click="forwardPage"></th>
+              <th class="hsy-datepicker__calendar-tables-table-th-prev" @click="backPage"></th>
+              <th colspan="5" class="hsy-datepicker__calendar-tables-table-th-month"> {{ page.date.format && page.date.format('YYYY年 M月') }} </th>
+              <th class="hsy-datepicker__calendar-tables-table-th-next" @click="forwardPage"></th>
             </tr>
             <tr>
               <th>日</th>
@@ -38,9 +40,10 @@
         </table>
       </div>
     </div>
-    <div class="confirm">
-      <button class="yes left" @click="saveChanges" :disabled="!savable">确定</button>
-      <button class="no right" @click="cancelClicked">取消</button>
+
+    <div class="hsy-datepicker__calendar-confirm">
+      <a href="javascript:;" class="hsy-datepicker__calendar-confirm-btn hsy-datepicker__calendar-confirm-btn-yes hsy-datepicker__calendar-confirm-btn--left" @click="saveChanges" :disabled="!savable">确定</a>
+      <a href="javascript:;" class="hsy-datepicker__calendar-confirm-btn hsy-datepicker__calendar-confirm-btn-no hsy-datepicker__calendar-confirm-btn--right" @click="cancelClicked">取消</a>
     </div>
   </div>
 </div>
@@ -146,8 +149,7 @@ export default {
     cls() {
       let daterange = this.mode === MODE_DATERANGE
       let cls = {
-        'hsy-datepicker': true,
-        daterange
+        'hsy-datepicker--daterange': daterange
       }
       if (this.cssClass) {
         cls[this.cssClass] = true
@@ -301,7 +303,7 @@ export default {
       for (let i = dayOfWeek; i > 0; i--) {
         d = date.clone().subtract(i, 'days')
         d.cssClass = {
-          off: true
+          'hsy-datepicker__calendar-tables-table-td--off': true
         }
         dates.push(d)
       }
@@ -312,13 +314,13 @@ export default {
           let between = this.isSelectingBetween(d)
           let end = this.isSelectingEnd(d)
           d.cssClass = {
-            start,
-            between,
-            end
+            'hsy-datepicker__calendar-tables-table-td--start': start,
+            'hsy-datepicker__calendar-tables-table-td--between': between,
+            'hsy-datepicker__calendar-tables-table-td--end': end
           }
         } else {
           d.cssClass = {
-            active: start
+            'hsy-datepicker__calendar-tables-table-td--active': start
           }
         }
         return d
@@ -335,7 +337,7 @@ export default {
       for (let i = 1; i <= tail; i++) {
         d = date.clone().add(i, 'days')
         d.cssClass = {
-          off: true
+          'hsy-datepicker__calendar-tables-table-td--off': true
         }
         dates.push(d)
       }
@@ -369,7 +371,7 @@ export default {
       }
     },
     selectDate(date) {
-      if (date.cssClass && date.cssClass.off) return
+      if (date.cssClass && date.cssClass['hsy-datepicker__calendar-tables-table-td--off']) return
       if (this.mode === MODE_DATE) {
         this.selecting0 = date
         return
@@ -442,11 +444,11 @@ export default {
       if (!this.isCalendarShow) return
 
       this.$nextTick(() => {
-        let inputEl = this.$el.querySelector('.selected > .input')
-        let selectedEl = this.$el.querySelector('.selected')
-        let calendarEl = this.$el.querySelector('.calendar')
-        if (selectedEl && inputEl && calendarEl) {
-          let inputRect = inputEl.getBoundingClientRect()
+        let labelEl = this.$el.querySelector('.hsy-datepicker__selected-label')
+        let selectedEl = this.$el.querySelector('.hsy-datepicker__selected')
+        let calendarEl = this.$el.querySelector('.hsy-datepicker__calendar')
+        if (selectedEl && labelEl && calendarEl) {
+          let inputRect = labelEl.getBoundingClientRect()
           let selectedRect = selectedEl.getBoundingClientRect()
           calendarEl.style.top = (inputRect.height + 5) + 'px'
           let calendarRect = calendarEl.getBoundingClientRect()
@@ -488,13 +490,15 @@ export default {
 
 <style lang="scss">
   .hsy-datepicker {
+    $bem_root: ".hsy-datepicker";
+
     display: inline-block;
     font-family: Helvetica Neue, Helvetica, PingFang SC, Hiragino Sans GB, Microsoft YaHei, SimSun, sans-serif;
     font-weight: 400;
     font-size: 14px;
     position: relative;
 
-    .calendar {
+    &__calendar {
       display: inline-block;
       background: #fff;
       border-radius: 4px;
@@ -503,151 +507,173 @@ export default {
       padding: 13px 20px;
       position: absolute;
 
-      .input input {
-        display: block;
-        padding: 0;
-        border: 1px solid #979797;
-        margin-bottom: 13px;
-        border-radius: 4px;
-        width: 100%;
-        font-size: 13px;
-        color: #6A7288;
-        height: 30px;
-        line-height: 30px;
-        text-align: center;
-        outline: none;
-
-        &:focus {
-          border: 1px solid #0097FF;
-        }
-      }
-
-      .tables {
+      &-tables {
         white-space: nowrap;
-      }
 
-      .table {
-        table {
-          border-collapse: collapse;
-          border-spacing: 0;
-        }
+        &-table {
+          color: #6a7288;
 
-        thead {
-          th {
-            &.prev, &.next {
-              padding: 15px;
+          table {
+            border-collapse: collapse;
+            border-spacing: 0;
+          }
+
+          thead {
+            th {
+              color: #333;
+              font-weight: normal;
+
+              &#{$bem_root}__calendar-tables-table-th-prev,
+              &#{$bem_root}__calendar-tables-table-th-next {
+                padding: 15px;
+                border-radius: 4px;
+                display: block;
+                cursor: pointer;
+
+                &:hover {
+                  background-color: #888;
+                }
+              }
+
+              &#{$bem_root}__calendar-tables-table-th-prev {
+                background: #9B9B9B url('assets/images/arrow-left-white.svg') no-repeat center center;
+              }
+
+              &#{$bem_root}__calendar-tables-table-th-next {
+                background: #9B9B9B url('assets/images/arrow-right-white.svg') no-repeat center center;
+              }
+
+              &#{$bem_root}__calendar-tables-table-th-month {
+                text-align: center;
+              }
+            }
+
+            tr:last-child th {
+              padding: 10px 0;
+            }
+          }
+
+          td {
+            padding: 8px;
+            text-align: center;
+
+            &:hover {
+              width: 20px;
+              height: 20px;
+              padding: 5px;
               border-radius: 4px;
-              display: block;
+              white-space: nowrap;
               cursor: pointer;
-            }
-
-            &.month {
-              text-align: center;
-            }
-          }
-
-          tr:last-child th {
-            padding: 10px 0;
-          }
-
-          th {
-            &.prev:hover, &.next:hover {
-              background-color: #888;
-            }
-
-            &.prev {
-              background: #9B9B9B url('assets/images/arrow-left-white.svg') no-repeat center center;
-            }
-
-            &.next {
-              background: #9B9B9B url('assets/images/arrow-right-white.svg') no-repeat center center;
-            }
-
-            color: #333;
-            font-weight: normal;
-          }
-        }
-
-        color: #6a7288;
-
-        td {
-          padding: 8px;
-          text-align: center;
-
-          &:hover {
-            width: 20px;
-            height: 20px;
-            padding: 5px;
-            border-radius: 4px;
-            white-space: nowrap;
-            cursor: pointer;
-            background-color: #eee;
-            color: #333;
-          }
-
-          &.off {
-            color: #ccc;
-
-            &:hover {
-              background-color: #fff;
-              cursor: default;
-            }
-          }
-
-          &.start {
-            background-color: #00A0FF;
-            color: #fff;
-            border-radius: 4px 0 0 4px;
-          }
-
-          &.active {
-            background-color: #00A0FF;
-            color: #fff;
-            border-radius: 4px;
-          }
-
-          &.between {
-            background-color: #B9E6FF;
-            color: #6A7289;
-
-            + td:not(.end):hover {
-              border-radius: 0;
-            }
-
-            &:hover {
-              border-radius: 0;
               background-color: #eee;
+              color: #333;
+            }
+
+            &#{$bem_root}__calendar-tables-table-td--off {
+              color: #ccc;
+
+              &:hover {
+                background-color: #fff;
+                cursor: default;
+              }
+            }
+
+            &#{$bem_root}__calendar-tables-table-td--start {
+              background-color: #00A0FF;
+              color: #fff;
+              border-radius: 4px 0 0 4px;
+            }
+
+            &#{$bem_root}__calendar-tables-table-td--active {
+              background-color: #00A0FF;
+              color: #fff;
+              border-radius: 4px;
+            }
+
+            &#{$bem_root}__calendar-tables-table-td--between {
+              background-color: #B9E6FF;
+              color: #6A7289;
+
+              + td:not(.end):hover {
+                border-radius: 0;
+              }
+
+              &:hover {
+                border-radius: 0;
+                background-color: #eee;
+              }
+            }
+
+            &#{$bem_root}__calendar-tables-table-td--end {
+              background-color: #00A0FF;
+              color: #fff;
+              border-radius: 0 4px 4px 0;
+            }
+
+            &#{$bem_root}__calendar-tables-table-td--start {
+              &#{$bem_root}__calendar-tables-table-td--end {
+                border-radius: 4px;
+              }
             }
           }
 
-          &.end {
-            background-color: #00A0FF;
-            color: #fff;
-            border-radius: 0 4px 4px 0;
+          &-inputs input {
+            display: block;
+            padding: 0;
+            border: 1px solid #979797;
+            margin-bottom: 13px;
+            border-radius: 4px;
+            width: 100%;
+            font-size: 13px;
+            color: #6A7288;
+            height: 30px;
+            line-height: 30px;
+            text-align: center;
+            outline: none;
+
+            &:focus {
+              border: 1px solid #0097FF;
+            }
           }
 
-          &.start.end {
-            border-radius: 4px;
+          @at-root #{$bem_root}#{$bem_root}--daterange & {
+            display: inline-block;
+
+            &:first-child {
+              #{$bem_root}__calendar-tables-table-th-next {
+                visibility: hidden;
+              }
+            }
+
+            &:last-child {
+              margin-left: 10px;
+
+              #{$bem_root}__calendar-tables-table-th-prev {
+                visibility: hidden;
+              }
+            }
           }
         }
       }
 
-      .confirm {
+      &-confirm {
         text-align: right;
         padding: 10px 0;
         padding-bottom: 0;
 
-        button {
-          border: 0;
+        &-btn {
+          display: inline-block;
+          text-align: center;
           border-radius: 3px;
           color: #fff;
           width: 80px;
           height: 33px;
+          line-height: 33px;
+          text-decoration: none;
           outline: none;
           cursor: pointer;
           font-size: 12px;
 
-          &.yes {
+          &-yes {
             background-color: #00A0FF;
 
             &:disabled {
@@ -656,50 +682,32 @@ export default {
             }
           }
 
-          &.no {
+          &-no {
             background-color: #9B9B9B;
             margin-left: 7px;
           }
-        }
-      }
-    }
 
-    .left {
-      float: left;
-    }
+          &--left {
+            float: left;
+          }
 
-    .right {
-      float: right;
-    }
+          &--right {
+            float: right;
+          }
 
-    .calendar .confirm::after {
-      content: "";
-      clear: both;
-    }
-
-    &.daterange {
-      .table {
-        display: inline-block;
-
-        &:first-child th.next {
-          visibility: hidden;
-        }
-
-        &:last-child {
-          margin-left: 10px;
-
-          th.prev {
-            visibility: hidden;
+          @at-root #{$bem_root}#{$bem_root}--daterange & {
+            float: none;
           }
         }
-      }
 
-      .confirm button {
-        float: none;
+        &::after {
+          content: "";
+          clear: both;
+        }
       }
     }
 
-    .selected {
+    &__selected {
       display: inline-block;
       border: 1px solid #fff;
       border-radius: 5px;
@@ -713,23 +721,21 @@ export default {
       position: relative;
       cursor: pointer;
 
-      > {
-        .input {
-          display: inline-block;
-          padding: 0 15px;
-          height: 100%;
-          font-size: 12px;
-          vertical-align: top;
-        }
+      &-handler {
+        display: inline-block;
+        vertical-align: top;
+        width: 28px;
+        height: 28px;
+        background: url('assets/images/light-arrow-down.svg') no-repeat right center;
+        background-size: contain;
+      }
 
-        .handler {
-          display: inline-block;
-          vertical-align: top;
-          width: 28px;
-          height: 28px;
-          background: url('assets/images/light-arrow-down.svg') no-repeat right center;
-          background-size: contain;
-        }
+      &-label {
+        display: inline-block;
+        padding: 0 15px;
+        height: 100%;
+        font-size: 12px;
+        vertical-align: top;
       }
     }
   }
